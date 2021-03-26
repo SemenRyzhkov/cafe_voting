@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity {
 
@@ -46,7 +48,8 @@ public class User extends BaseEntity {
 //    @BatchSize(size = 20)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private List<Cafe>cafes;
 
 }

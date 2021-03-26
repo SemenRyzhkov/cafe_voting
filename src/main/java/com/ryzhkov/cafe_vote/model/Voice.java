@@ -1,6 +1,5 @@
 package com.ryzhkov.cafe_vote.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,11 +8,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-@Table(name = "voices")
+@Table(name = "voices", uniqueConstraints = {@UniqueConstraint(columnNames = {"cafe_id", "date"}, name = "voice_unique_index")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class Voice extends BaseEntity{
 
@@ -24,9 +24,5 @@ public class Voice extends BaseEntity{
     @NotNull
     @Column(name = "time", nullable = false)
     private LocalTime time;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "cafe_id")
-    private Cafe cafe;
 
 }

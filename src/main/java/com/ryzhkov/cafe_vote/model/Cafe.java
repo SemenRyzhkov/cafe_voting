@@ -1,12 +1,14 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cafes")
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
 @ToString
 public class Cafe extends BaseEntity {
 
@@ -31,12 +34,17 @@ public class Cafe extends BaseEntity {
     @URL
     String homepage;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cafe_id")
+    private Set<Voice> voices;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "cafe")
-    private List<Voice> voices;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cafe_id")
+    private Set<Dish> menu;
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
 
 }
