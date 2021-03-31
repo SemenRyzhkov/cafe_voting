@@ -1,7 +1,6 @@
 package com.ryzhkov.cafe_vote.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;

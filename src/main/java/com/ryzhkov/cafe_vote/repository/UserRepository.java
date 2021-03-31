@@ -9,10 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
+//    @Transactional
+//    @Modifying
+//    @Query("DELETE FROM User u WHERE u.id=:id")
+//    int delete(@Param("id") int id);
+
     @Transactional
     @Modifying
-    @Query("DELETE FROM User u WHERE u.id=:id")
-    int delete(@Param("id") int id);
+    Integer deleteById(int id);
 
     User getByEmail(String email);
 }

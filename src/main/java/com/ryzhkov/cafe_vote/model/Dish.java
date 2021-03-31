@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @ToString
 public class Dish extends BaseEntity{
     @Column(name = "date_time", nullable = false)
@@ -31,6 +30,5 @@ public class Dish extends BaseEntity{
 
     @Min(0)
     @Column(name = "price", nullable = false)
-    private int price;
-
+    private Integer price;
 }

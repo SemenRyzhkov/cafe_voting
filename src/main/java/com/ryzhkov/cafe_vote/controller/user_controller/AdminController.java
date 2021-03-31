@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.controller.user_controller;
 
+import com.ryzhkov.cafe_vote.dto.UserDto;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class AdminController extends AbstractUserController {
     }
 
     @GetMapping("/users/{id}")
-    public User get(@PathVariable int id) {
+    public UserDto get(@PathVariable int id) {
         return super.get(id);
     }
 

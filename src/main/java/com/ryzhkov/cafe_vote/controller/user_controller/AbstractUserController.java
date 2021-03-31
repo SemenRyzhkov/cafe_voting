@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.controller.user_controller;
 
+import com.ryzhkov.cafe_vote.dto.UserDto;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.service.UserService;
 import lombok.AccessLevel;
@@ -22,7 +23,7 @@ public abstract class AbstractUserController {
         return service.getAll();
     }
 
-    public User get(int id) {
+    public UserDto get(int id) {
         log.info("get {}", id);
         return service.get(id);
     }
