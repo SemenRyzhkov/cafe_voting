@@ -46,7 +46,7 @@ public class User extends BaseEntity {
 //    @BatchSize(size = 20)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     @OrderBy("cafeName")
     private List<Cafe> cafes;

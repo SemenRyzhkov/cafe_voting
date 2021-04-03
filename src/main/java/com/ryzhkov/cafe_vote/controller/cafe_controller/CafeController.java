@@ -25,50 +25,44 @@ public class CafeController {
     private final CafeService cafeService;
 
     //for user
-    @GetMapping("/cafes")
+    @GetMapping("/cafe")
     public List<CafeDto> getAllWithTodayMenuAndVoices() {
         log.info("getAllWithTodayMenuAndVoices");
         return cafeService.getAllWithTodayMenuAndVoices();
     }
 
     //for admin
-    @GetMapping("/cafes/my")
+    @GetMapping("/cafe/my")
     public List<CafeDto> getAllMine() {
         int id = authUserId();
         log.info("getAllMine");
         return cafeService.getByUserId(id);
     }
 
-    @GetMapping("/cafes/{id}")
+    @GetMapping("/cafe/{id}")
     public CafeDto get(@PathVariable int id) {
         int userId = authUserId();
         log.info("get cafe {} for user {}", id, userId);
         return cafeService.get(id, userId);
     }
 
-    @GetMapping("/dish/{cafeId}")
-    public Set<DishDto> getMenu(@PathVariable int cafeId) {
-        return get(cafeId).getMenu();
-    }
-
-
-    @PostMapping("/cafes")
-    public Cafe create(@RequestBody Cafe cafe) {
+    @PostMapping("/cafe")
+    public CafeDto create(@RequestBody Cafe cafe) {
         int userId = authUserId();
         checkNew(cafe);
         log.info("create {} for user{}", cafe, userId);
         return cafeService.save(cafe, userId);
     }
 
-    @PutMapping("/cafes/{id}")
-    public Cafe update(@RequestBody Cafe cafe, @PathVariable int id) {
+    @PutMapping("/cafe/{id}")
+    public CafeDto update(@RequestBody Cafe cafe, @PathVariable int id) {
         int userId = authUserId();
         assureIdConsistent(cafe, id);
         log.info("update {} for user {}", cafe, userId);
         return cafeService.save(cafe, userId);
     }
 
-    @DeleteMapping("/cafes/{id}")
+    @DeleteMapping("/cafe/{id}")
     public void delete(@PathVariable int id) {
         int userId = authUserId();
         log.info("delete cafe {} for user {}", id, userId);

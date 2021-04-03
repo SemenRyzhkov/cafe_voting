@@ -2,8 +2,6 @@ package com.ryzhkov.cafe_vote.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
-
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter

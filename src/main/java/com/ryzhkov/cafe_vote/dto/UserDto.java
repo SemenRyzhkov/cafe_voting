@@ -16,5 +16,5 @@ public class UserDto extends BaseDto{
     private String name;
     private String email;
     private Set<Role>roles;
-    private Map<Integer, String> cafes;
+//    private Map<Integer, String> cafes;
 }

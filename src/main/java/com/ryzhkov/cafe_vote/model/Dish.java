@@ -11,14 +11,14 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"dish", "date_time", "cafe_id"}, name = "dish_unique_index")})
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"dish", "date", "cafe_id"}, name = "dish_unique_index")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 public class Dish extends BaseEntity{
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
@@ -31,4 +31,7 @@ public class Dish extends BaseEntity{
     @Min(0)
     @Column(name = "price", nullable = false)
     private Integer price;
+
+    @ManyToOne
+    private Cafe cafe;
 }

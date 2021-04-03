@@ -44,23 +44,24 @@ public class CafeService {
         return cafe != null && cafe.getUser().getId() == userId ? cafeMapper.toDto(cafe) : null;
     }
 
-    public Cafe save(@NonNull Cafe cafe, int userId) {
+    @Transactional
+    public CafeDto save(@NonNull Cafe cafe, int userId) {
         User user = userRepository.getOne(userId);
         cafe.setUser(user);
         if (cafe.isNew() || get(cafe.getId(), userId) != null) {
-            return cafeRepository.save(cafe);
+            return cafeMapper.toDto(cafeRepository.save(cafe));
         } else return null;
     }
 
-    public List<DishDto> getMenu(int cafeId){
+    public List<DishDto> getMenu(int cafeId) {
         return cafeRepository.getOne(cafeId)
                 .getMenu().stream()
                 .map(dishMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    
+    @Transactional
     public void delete(int id, int userId) {
-        cafeRepository.delete(id, userId);
+        cafeRepository.deleteByIdAndUserId(id, userId);
     }
 }

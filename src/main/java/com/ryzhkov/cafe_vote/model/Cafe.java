@@ -37,17 +37,35 @@ public class Cafe extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
-    @OrderBy("date")
+    @OrderBy("date desc")
+    @Setter(AccessLevel.NONE)
     private Set<Voice> voices;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
-    @OrderBy("dish desc")
+    @OrderBy("dish")
+    @Setter(AccessLevel.NONE)
     private Set<Dish> menu;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnore
     private User user;
 
+
+    public void setMenu(Set<Dish> menu) {
+        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
+        this.menu.clear();
+        if (menu != null) {
+            this.menu.addAll(menu);
+        }
+    }
+
+    public void setVoices(Set<Voice> voices) {
+        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
+        this.voices.clear();
+        if (voices != null) {
+            this.voices.addAll(voices);
+        }
+    }
 
 }

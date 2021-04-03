@@ -20,7 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
-@NoArgsConstructor
 public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
 
     //    @Autowired
@@ -55,9 +54,6 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
         destination.setVoicesToday(getVoices(source));
     }
 
-    ;
-
-
     protected Integer getId(Cafe source) {
         return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getUser().getId();
     }
@@ -71,9 +67,8 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
     }
 
     protected Integer getVoices(Cafe source) {
-        return source.getVoices().stream()
+        return (int) source.getVoices().stream()
                 .filter(voice -> voice.getDate().equals(LocalDate.now()))
-                .mapToInt(voice->1)
-                .sum();
+                .count();
     }
 }

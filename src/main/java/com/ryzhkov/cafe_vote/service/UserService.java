@@ -37,12 +37,7 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void delete(int id) {
-        String selectQuery = "SELECT u FROM User u WHERE u.id=:id";
-        entityManager
-                .createQuery(selectQuery)
-                .setParameter("id", id)
-                .getResultStream()
-                .forEach(entityManager::remove);
+        repository.deleteById(id);
     }
 
     public UserDto get(int id) {

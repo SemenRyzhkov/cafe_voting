@@ -12,11 +12,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //    @Transactional
 //    @Modifying
 //    @Query("DELETE FROM User u WHERE u.id=:id")
-//    int delete(@Param("id") int id);
+//    void delete(@Param("id") int id);
 
     @Transactional
     @Modifying
-    Integer deleteById(int id);
+    void deleteById(Integer id);
 
     User getByEmail(String email);
 }
