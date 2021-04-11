@@ -25,20 +25,21 @@ public class CafeService {
     private final CafeMapper cafeMapper;
     private final DishMapper dishMapper;
 
-    public List<CafeDto> getAllWithTodayMenuAndVoices() {
-        return cafeRepository.findAll()
+    public List<CafeDto> getAll() {
+        return cafeRepository.getAll()
                 .stream()
                 .map(cafeMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public List<CafeDto> getByUserId(int userId) {
-        return cafeRepository.getAllByUserId(userId)
+        return cafeRepository.getByUserId(userId)
                 .stream()
                 .map(cafeMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public CafeDto get(int id, int userId) {
         Cafe cafe = cafeRepository.findById(id).orElse(null);
         return cafe != null && cafe.getUser().getId() == userId ? cafeMapper.toDto(cafe) : null;

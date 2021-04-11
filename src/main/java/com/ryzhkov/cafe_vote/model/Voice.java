@@ -10,20 +10,23 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "voices", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id", "cafe_id"}, name = "voice_unique_index")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 public class Voice extends BaseEntity {
-    @NotNull
+    @NonNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @NotNull
+    @NonNull
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
     @NotNull
     @Column(name = "user_id", nullable = false)
     private int userId;
+
+    @ManyToOne
+    private Cafe cafe;
 }

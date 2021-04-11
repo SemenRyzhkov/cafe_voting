@@ -41,8 +41,8 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Cafe.class, CafeDto.class)
-                .addMappings(m -> m.skip(CafeDto::setMenu))
-                .addMappings(m -> m.skip(CafeDto::setVoicesToday))
+//                .addMappings(m -> m.skip(CafeDto::setMenu))
+//                .addMappings(m -> m.skip(CafeDto::setVoicesToday))
                 .addMappings((m -> m.skip(CafeDto::setUserId)))
                 .setPostConverter(toDtoConverter());
     }
@@ -50,8 +50,8 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
     @Override
     protected void mapSpecificFields(Cafe source, CafeDto destination) {
         destination.setUserId(getId(source));
-        destination.setMenu(getMenu(source));
-        destination.setVoicesToday(getVoices(source));
+//        destination.setMenu(getMenu(source));
+//        destination.setVoicesToday(getVoices(source));
     }
 
     protected Integer getId(Cafe source) {
@@ -59,16 +59,16 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
     }
 
     //
-    protected Set<DishDto> getMenu(Cafe source) {
-        return source.getMenu().stream()
-                .filter(dish -> dish.getDate().equals(LocalDate.now()))
-                .map(dish -> dishMapper.toDto(dish))
-                .collect(Collectors.toSet());
-    }
-
-    protected Integer getVoices(Cafe source) {
-        return (int) source.getVoices().stream()
-                .filter(voice -> voice.getDate().equals(LocalDate.now()))
-                .count();
-    }
+//    protected Set<DishDto> getMenu(Cafe source) {
+//        return source.getMenu().stream()
+//                .filter(dish -> dish.getDate().equals(LocalDate.now()))
+//                .map(dish -> dishMapper.toDto(dish))
+//                .collect(Collectors.toSet());
+//    }
+//
+//    protected Integer getVoices(Cafe source) {
+//        return (int) source.getVoices().stream()
+//                .filter(voice -> voice.getDate().equals(LocalDate.now()))
+//                .count();
+//    }
 }

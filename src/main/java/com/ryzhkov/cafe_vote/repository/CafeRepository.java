@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = false)
+@Transactional(readOnly = true)
 public interface CafeRepository extends JpaRepository<Cafe, Integer> {
 
     //написать запрос для кафе с джойном отфильтрованной по дате таблицей меню
@@ -33,15 +32,22 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
     //    @Query("SELECT c FROM Cafe c WHERE c.user.id=:userId")
     List<Cafe> getAllByUserId(int id);
 
+    @Query("SELECT c FROM Cafe c LEFT JOIN FETCH c.user WHERE c.user.id=:userId")
+    List<Cafe> getByUserId(@Param("userId") int userId);
 
+    @Query("SELECT c FROM Cafe c LEFT JOIN FETCH c.user ")
+    List<Cafe> getAll();
+
+    @Query("SELECT c FROM Cafe c LEFT JOIN FETCH c.menu WHERE c.id=:id")
+    Optional<Cafe> findByIdWithMenu(@Param("id") int id);
+
+//    https://stackoverflow.com/questions/7825484/jpa-delete-where-does-not-delete-children-and-throws-an-exception
 //    @Transactional
 //    @Modifying
 //    @Query("DELETE FROM Cafe c WHERE c.id=:id AND c.user.id=:userId")
 //    int delete(@Param("id") int id, @Param("userId") int userId);
 
-//    https://stackoverflow.com/questions/7825484/jpa-delete-where-does-not-delete-children-and-throws-an-exception
     @Transactional
     @Modifying
-//    @Query("DELETE FROM Cafe c WHERE c.id=:id AND c.user.id=:userId")
-    void deleteByIdAndUserId(@Param("id") int id, @Param("userId") int userId);
+    void deleteByIdAndUserId(int id, int userId);
 }

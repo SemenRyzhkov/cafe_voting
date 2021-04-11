@@ -26,9 +26,9 @@ public class CafeController {
 
     //for user
     @GetMapping("/cafe")
-    public List<CafeDto> getAllWithTodayMenuAndVoices() {
-        log.info("getAllWithTodayMenuAndVoices");
-        return cafeService.getAllWithTodayMenuAndVoices();
+    public List<CafeDto> getAll() {
+        log.info("getAll");
+        return cafeService.getAll();
     }
 
     //for admin
@@ -54,7 +54,7 @@ public class CafeController {
         return cafeService.save(cafe, userId);
     }
 
-    @PutMapping("/cafe/{id}")
+    @PutMapping("/cafe/")
     public CafeDto update(@RequestBody Cafe cafe, @PathVariable int id) {
         int userId = authUserId();
         assureIdConsistent(cafe, id);

@@ -20,22 +20,18 @@ public class DishController {
 
     private final DishService dishService;
 
-    @GetMapping("{cafeId}/menu/")
+    //for admin
+    @GetMapping("{cafeId}/menu")
     public Map<LocalDate, List<DishDto>> historyOfMenu(@PathVariable int cafeId){
         log.info("historyOfMenu for {}", cafeId);
         return dishService.historyOfMenu(cafeId);
     }
 
+//    for user: if admin forgot refresh menu, find yesterday menu
     @GetMapping("{cafeId}/menu/by-date/curdate")
     public List<DishDto> todayMenuIfPresentOrElseYesterdayMenu(@PathVariable int cafeId){
         log.info("todayMenuIfPresentOrElseYesterdayMenu for {}", cafeId);
         return dishService.todayMenuIfPresentOrYesterdayMenu(cafeId);
-    }
-
-    @GetMapping("{cafeId}/menu/{id}")
-    public DishDto get(@PathVariable int id, @PathVariable int cafeId){
-        log.info("get dish {} for cafe {}", id, cafeId);
-        return dishService.get(id, cafeId);
     }
 
     @PostMapping("{cafeId}/menu")
@@ -45,7 +41,7 @@ public class DishController {
         return  dishService.save(dish, userId, cafeId);
     }
 
-    @PutMapping("{cafeId}/menu/{id}")
+    @PutMapping("{cafeId}/menu/")
     public DishDto update(@RequestBody Dish dish, @PathVariable int cafeId){
         int userId = SecurityUtil.authUserId();
         log.info("update dish {} for cafe{}", dish, cafeId);

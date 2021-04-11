@@ -35,16 +35,16 @@ public class Cafe extends BaseEntity {
     @URL
     String homepage;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
     @OrderBy("date desc")
-    @Setter(AccessLevel.NONE)
+//    @Setter(AccessLevel.NONE)
     private Set<Voice> voices;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
     @OrderBy("dish")
-    @Setter(AccessLevel.NONE)
+//    @Setter(AccessLevel.NONE)
     private Set<Dish> menu;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
@@ -52,20 +52,20 @@ public class Cafe extends BaseEntity {
     private User user;
 
 
-    public void setMenu(Set<Dish> menu) {
-        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
-        this.menu.clear();
-        if (menu != null) {
-            this.menu.addAll(menu);
-        }
-    }
-
-    public void setVoices(Set<Voice> voices) {
-        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
-        this.voices.clear();
-        if (voices != null) {
-            this.voices.addAll(voices);
-        }
-    }
+//    public void setMenu(Set<Dish> menu) {
+//        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
+//        this.menu.clear();
+//        if (menu != null) {
+//            this.menu.addAll(menu);
+//        }
+//    }
+//
+//    public void setVoices(Set<Voice> voices) {
+//        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
+//        this.voices.clear();
+//        if (voices != null) {
+//            this.voices.addAll(voices);
+//        }
+//    }
 
 }

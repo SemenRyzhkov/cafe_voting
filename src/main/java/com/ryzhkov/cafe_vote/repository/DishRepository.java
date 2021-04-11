@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional(readOnly = true)
 public interface DishRepository extends JpaRepository<Dish, Integer> {
 
-    Dish getByIdAndCafeId(int id, int cafeId);
+    Optional<Dish> getByIdAndCafeId(int id, int cafeId);
 
     @Transactional
     @Modifying

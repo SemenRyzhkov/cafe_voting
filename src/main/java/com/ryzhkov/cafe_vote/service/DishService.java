@@ -25,7 +25,7 @@ public class DishService {
     private final DishMapper dishMapper;
 
     public Map<LocalDate, List<DishDto>> historyOfMenu(int cafeId) {
-        Cafe cafe = cafeRepository.findById(cafeId)
+        Cafe cafe = cafeRepository.findByIdWithMenu(cafeId)
                 .orElseThrow(() -> new NotFoundException("Cafe with id " + cafeId + " not found"));
         return getHistory(cafe);
     }
@@ -43,13 +43,18 @@ public class DishService {
     public DishDto save(@NonNull Dish dish, int userId, int cafeId) {
         Cafe cafe = cafeRepository.findById(cafeId).orElse(null);
         if (cafe != null && cafe.getUser().getId() == userId) {
+            if (dish.isNew()) {
+                dish.setDate(LocalDate.now());
+            } else {
+                dish.setDate(get(dish.getId(), cafeId).getDate());
+            }
             dish.setCafe(cafe);
             return dishMapper.toDto(dishRepository.save(dish));
         } else return null;
     }
 
-    public DishDto get(int id, int cafeId) {
-        return dishMapper.toDto(dishRepository.getByIdAndCafeId(id, cafeId));
+    public Dish get(int id, int cafeId) {
+        return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(()->new NotFoundException("Dish not found"));
     }
 
     @Transactional

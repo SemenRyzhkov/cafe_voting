@@ -14,7 +14,7 @@ public class CafeDto extends BaseDto {
     private String cafeName;
     private String description;
     private String homepage;
-    private Set<DishDto> menu;
-    private Integer voicesToday;
+//    private Set<DishDto> menu;
+//    private Integer voicesToday;
     private Integer userId;
 }
