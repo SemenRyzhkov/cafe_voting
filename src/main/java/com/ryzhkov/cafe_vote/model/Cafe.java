@@ -1,6 +1,8 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -15,7 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "cafes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -24,32 +26,43 @@ public class Cafe extends BaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
-    String cafeName;
+    @NonNull
+    private String cafeName;
 
     @Column(name = "description")
-    String description;
+    @NonNull
+    private String description;
 
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "homepage", nullable = false)
     @URL
-    String homepage;
+    @NonNull
+    private String homepage;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
     @OrderBy("date desc")
 //    @Setter(AccessLevel.NONE)
+    @JsonManagedReference
+
     private Set<Voice> voices;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cafe_id")
     @OrderBy("dish")
 //    @Setter(AccessLevel.NONE)
+    @JsonManagedReference
+
     private Set<Dish> menu;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JsonIgnore
+
+    @JsonBackReference
+
     private User user;
+
+
 
 
 //    public void setMenu(Set<Dish> menu) {

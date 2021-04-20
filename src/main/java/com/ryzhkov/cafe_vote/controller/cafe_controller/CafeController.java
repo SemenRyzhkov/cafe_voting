@@ -54,7 +54,7 @@ public class CafeController {
         return cafeService.save(cafe, userId);
     }
 
-    @PutMapping("/cafe/")
+    @PutMapping("/cafe/{id}")
     public CafeDto update(@RequestBody Cafe cafe, @PathVariable int id) {
         int userId = authUserId();
         assureIdConsistent(cafe, id);

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,13 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
             "WHERE c.id=:cafeId " +
             "AND d.date=current_date-1 ")
     Optional<Cafe> getWithYesterdayMenu(@Param("cafeId") int cafeId);
+
+    @Query("SELECT  DISTINCT  c, d " +
+            "FROM Cafe c " +
+            "LEFT JOIN FETCH c.menu d " +
+            "WHERE c.id=:cafeId " +
+            "AND d.date=:date")
+    Optional<Cafe>getWithMenuByDate(@Param("cafeId") int cafeId, @Param("date") LocalDate date);
 
     //    @Query("SELECT c FROM Cafe c WHERE c.user.id=:userId")
     List<Cafe> getAllByUserId(int id);

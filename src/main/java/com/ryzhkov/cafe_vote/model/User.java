@@ -1,13 +1,17 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+//@AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity {
 
@@ -49,5 +53,27 @@ public class User extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     @OrderBy("cafeName")
+    @JsonManagedReference
+
     private List<Cafe> cafes;
+
+    public User(User u){
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRoles());
+    }
+
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String name, String email, String password, Collection<Role> roles) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        setRoles(roles);
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
 }

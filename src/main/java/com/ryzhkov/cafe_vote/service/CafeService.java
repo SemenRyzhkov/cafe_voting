@@ -10,6 +10,8 @@ import com.ryzhkov.cafe_vote.repository.CafeRepository;
 import com.ryzhkov.cafe_vote.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CafeService {
     private final CafeRepository cafeRepository;
     private final UserRepository userRepository;
@@ -39,8 +42,9 @@ public class CafeService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
+    @Cacheable("addresses")
     public CafeDto get(int id, int userId) {
+        log.info("get cafe {} for user {}", id, userId);
         Cafe cafe = cafeRepository.findById(id).orElse(null);
         return cafe != null && cafe.getUser().getId() == userId ? cafeMapper.toDto(cafe) : null;
     }

@@ -24,10 +24,22 @@ public class DishService {
     private final DishRepository dishRepository;
     private final DishMapper dishMapper;
 
-    public Map<LocalDate, List<DishDto>> historyOfMenu(int cafeId) {
+    public Map<LocalDate, List<DishDto>> historyOfMenu(int cafeId, int userid) {
         Cafe cafe = cafeRepository.findByIdWithMenu(cafeId)
                 .orElseThrow(() -> new NotFoundException("Cafe with id " + cafeId + " not found"));
-        return getHistory(cafe);
+        if (cafe != null && cafe.getUser().getId() == userid) {
+            return getHistory(cafe);
+        } else return null;
+    }
+
+    public List<DishDto> menuByDate(int cafeId, int userId, LocalDate date) {
+        Cafe cafe = cafeRepository.getWithMenuByDate(cafeId, date)
+                .orElseThrow(() -> new NotFoundException("Cafe with id " + cafeId + " not found"));
+        if (cafe != null && cafe.getUser().getId() == userId) {
+            return cafe.getMenu().stream()
+                    .map(dishMapper::toDto)
+                    .collect(Collectors.toList());
+        } else return null;
     }
 
     public List<DishDto> todayMenuIfPresentOrYesterdayMenu(int cafeId) {
@@ -41,7 +53,7 @@ public class DishService {
 
     @Transactional
     public DishDto save(@NonNull Dish dish, int userId, int cafeId) {
-        Cafe cafe = cafeRepository.findById(cafeId).orElse(null);
+        Cafe cafe = getCafe(cafeId);
         if (cafe != null && cafe.getUser().getId() == userId) {
             if (dish.isNew()) {
                 dish.setDate(LocalDate.now());
@@ -53,13 +65,20 @@ public class DishService {
         } else return null;
     }
 
-    public Dish get(int id, int cafeId) {
-        return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(()->new NotFoundException("Dish not found"));
+    @Transactional
+    public void delete(int id, int userId, int cafeId) {
+        Cafe cafe = getCafe(cafeId);
+        if (cafe != null && cafe.getUser().getId() == userId) {
+            dishRepository.deleteByIdAndCafeId(id, cafeId);
+        }
     }
 
-    @Transactional
-    public void delete(int id, int cafeId) {
-        dishRepository.deleteByIdAndCafeId(id, cafeId);
+    private Cafe getCafe(int cafeId) {
+        return cafeRepository.findById(cafeId).orElse(null);
+    }
+
+    private Dish get(int id, int cafeId) {
+        return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(() -> new NotFoundException("Dish not found"));
     }
 
     private Map<LocalDate, List<DishDto>> getHistory(Cafe cafe) {

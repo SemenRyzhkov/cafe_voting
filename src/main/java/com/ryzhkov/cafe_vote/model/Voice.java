@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,5 +29,7 @@ public class Voice extends BaseEntity {
     private int userId;
 
     @ManyToOne
+    @JsonBackReference
+
     private Cafe cafe;
 }

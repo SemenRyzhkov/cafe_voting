@@ -1,11 +1,11 @@
 package com.ryzhkov.cafe_vote.controller.user_controller;
 
-import com.ryzhkov.cafe_vote.dto.UserDto;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.service.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public abstract class AbstractUserController {
         return service.getAll();
     }
 
-    public UserDto get(int id) {
+    public User get(int id) {
         log.info("get {}", id);
         return service.get(id);
     }
@@ -39,10 +39,10 @@ public abstract class AbstractUserController {
         service.delete(id);
     }
 
-    public User update(User user, int id) {
+    public void update(User user, int id) {
         log.info("update {} with id={}", user, id);
         assureIdConsistent(user, id);
-        return service.update(user);
+        service.update(user);
     }
 
     public User getByMail(String email) {

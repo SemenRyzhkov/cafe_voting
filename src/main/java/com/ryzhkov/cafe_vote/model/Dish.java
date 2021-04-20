@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -33,5 +34,7 @@ public class Dish extends BaseEntity{
     private Integer price;
 
     @ManyToOne
+    @JsonBackReference
+
     private Cafe cafe;
 }
