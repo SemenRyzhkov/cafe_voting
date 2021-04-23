@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.controller.user_controller;
 
+import com.ryzhkov.cafe_vote.dto.UserDto;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.service.UserService;
 import lombok.AccessLevel;

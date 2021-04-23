@@ -1,11 +1,8 @@
 package com.ryzhkov.cafe_vote.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -17,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "cafes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -26,59 +23,43 @@ public class Cafe extends BaseEntity {
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
-    @NonNull
     private String cafeName;
 
     @Column(name = "description")
-    @NonNull
     private String description;
 
     @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "homepage", nullable = false)
     @URL
-    @NonNull
     private String homepage;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cafe_id")
     @OrderBy("date desc")
-//    @Setter(AccessLevel.NONE)
     @JsonManagedReference
-
     private Set<Voice> voices;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cafe_id")
     @OrderBy("dish")
-//    @Setter(AccessLevel.NONE)
     @JsonManagedReference
-
+    @Setter(AccessLevel.NONE)
     private Set<Dish> menu;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-
     @JsonBackReference
-
     private User user;
 
+    public Cafe(Cafe cafe){
+        this(cafe.getId(), cafe.getCafeName(), cafe.getDescription(), cafe.getHomepage());
+    }
 
-
-
-//    public void setMenu(Set<Dish> menu) {
-//        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
-//        this.menu.clear();
-//        if (menu != null) {
-//            this.menu.addAll(menu);
-//        }
-//    }
-//
-//    public void setVoices(Set<Voice> voices) {
-//        //this.sonEntities = aSet; //This will override the set that Hibernate is tracking.
-//        this.voices.clear();
-//        if (voices != null) {
-//            this.voices.addAll(voices);
-//        }
-//    }
+    public Cafe(Integer id, String cafeName, String description, String homepage){
+        super(id);
+        this.cafeName = cafeName;
+        this.description = description;
+        this.homepage = homepage;
+    }
 
 }

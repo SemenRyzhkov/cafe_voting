@@ -1,5 +1,7 @@
 package com.ryzhkov.cafe_vote.service;
 
+import com.ryzhkov.cafe_vote.dto.UserDto;
+import com.ryzhkov.cafe_vote.mapper.UserMapper;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ryzhkov.cafe_vote.util.ValidationUtil.checkNotFound;
 import static com.ryzhkov.cafe_vote.util.ValidationUtil.checkNotFoundWithId;
@@ -22,6 +25,8 @@ import static com.ryzhkov.cafe_vote.util.ValidationUtil.checkNotFoundWithId;
 @Slf4j
 public class UserService {
     private static final Sort SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email");
+
+    private final UserMapper mapper;
 
     private final UserRepository repository;
 

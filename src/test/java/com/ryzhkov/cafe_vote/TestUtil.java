@@ -1,6 +1,6 @@
 package com.ryzhkov.cafe_vote;
 
-import com.ryzhkov.cafe_vote.controller.JsonUtil;
+import com.ryzhkov.cafe_vote.controller.json.JsonUtil;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 

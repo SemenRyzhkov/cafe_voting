@@ -1,7 +1,8 @@
 package com.ryzhkov.cafe_vote.controller.user_controller;
 
-import com.ryzhkov.cafe_vote.UserTestData;
-import com.ryzhkov.cafe_vote.controller.JsonUtil;
+import com.ryzhkov.cafe_vote.controller.AbstractControllerTest;
+import com.ryzhkov.cafe_vote.test_data.UserTestData;
+import com.ryzhkov.cafe_vote.controller.json.JsonUtil;
 import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.service.UserService;
 import com.ryzhkov.cafe_vote.util.exception.NotFoundException;
@@ -12,13 +13,13 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.ryzhkov.cafe_vote.TestUtil.readFromJson;
-import static com.ryzhkov.cafe_vote.UserTestData.*;
+import static com.ryzhkov.cafe_vote.test_data.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AdminControllerTest extends AbstractControllerTest{
+class AdminControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminController.REST_URL + '/';
 
@@ -30,9 +31,8 @@ class AdminControllerTest extends AbstractControllerTest{
         perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
-                // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin));
+                .andExpect(USER_MATCHER.contentJson(admin1));
     }
 
     @Test
@@ -82,6 +82,6 @@ class AdminControllerTest extends AbstractControllerTest{
         perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin, user));
+                .andExpect(USER_MATCHER.contentJson(admin1, admin2, user));
     }
 }

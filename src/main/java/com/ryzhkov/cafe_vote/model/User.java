@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -20,7 +21,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
 @ToString(callSuper = true, exclude = {"password"})
 public class User extends BaseEntity {
 
@@ -54,7 +54,7 @@ public class User extends BaseEntity {
     @JoinColumn(name = "user_id")
     @OrderBy("cafeName")
     @JsonManagedReference
-
+//    @JsonIgnore
     private List<Cafe> cafes;
 
     public User(User u){

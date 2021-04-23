@@ -1,20 +1,25 @@
 INSERT INTO USERS (NAME, EMAIL, PASSWORD)
-VALUES ('User_First', 'user@gmail.com', 'user'),
-       ('Admin_First', 'admin@yandex.ru', 'admin');
+VALUES ('Admin_First', 'admin@yandex.ru', 'admin'),
+       ('Admin_Second', 'second@yandex.ru', 'second'),
+       ('User_First', 'user@gmail.com', 'user');
 
 INSERT INTO USER_ROLES (ROLE, USER_ID)
 VALUES ('USER', 1),
+       ('ADMIN', 1),
        ('USER', 2),
-       ('ADMIN', 2);
+       ('ADMIN', 2),
+       ('USER', 3);
 
 INSERT INTO CAFES (NAME, DESCRIPTION, HOMEPAGE, USER_ID)
-VALUES ('cafe1', null, 'cafe1.com', 1),
-       ('cafe2', 'new_cafe', 'cafe2.com', 1),
-       ('cafe3', 'best_cafe', 'cafe3.com', 2);
---        ('cafe4', 'beautiful_cafe', 'cafe4.com', 3),
---        ('cafe5', 'old_cafe', 'cafe5.ru', 4),
---        ('cafe6', null, 'cafe6.ru', 5),
---        ('cafe7', 'bar_cafe', 'cafe7.ru', 5);
+VALUES ('cafe1', null, 'http://cafe1.com', 1),
+       ('cafe2', 'new_cafe', 'http://cafe2.com', 1),
+       ('cafe3', 'best_cafe', 'http://cafe3.com', 1),
+       ('cafe4', 'beautiful_cafe', 'http://cafe4.com', 1),
+       ('cafe5', 'old_cafe', 'http://cafe5.ru', 1),
+       ('cafe6', null, 'http://cafe6.ru', 1),
+       ('cafe7', 'bar_cafe', 'http://cafe7.ru', 1),
+       ('cafe8', 'otherCafe', 'http://cafe8.by', 2),
+       ('cafe9', 'otherCafe', 'http://cafe9.by', 2);
 
 INSERT INTO DISHES (DATE, DISH, PRICE, CAFE_ID)
 VALUES ('2021-04-03', 'dish1', 100, 1),

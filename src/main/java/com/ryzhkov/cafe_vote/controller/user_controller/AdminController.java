@@ -21,7 +21,7 @@ public class AdminController extends AbstractUserController {
     }
 
     @GetMapping
-    public List<User> showAllUsers() {
+    public List<User> getAll() {
         return super.getAll();
     }
 

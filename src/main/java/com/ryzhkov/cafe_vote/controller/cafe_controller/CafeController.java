@@ -1,68 +1,78 @@
 package com.ryzhkov.cafe_vote.controller.cafe_controller;
 
+import com.ryzhkov.cafe_vote.controller.user_controller.AdminController;
 import com.ryzhkov.cafe_vote.dto.CafeDto;
-import com.ryzhkov.cafe_vote.dto.DishDto;
 import com.ryzhkov.cafe_vote.model.Cafe;
 import com.ryzhkov.cafe_vote.service.CafeService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
-import static com.ryzhkov.cafe_vote.util.DateTimeUtil.convert;
 import static com.ryzhkov.cafe_vote.util.SecurityUtil.authUserId;
 import static com.ryzhkov.cafe_vote.util.ValidationUtil.assureIdConsistent;
 import static com.ryzhkov.cafe_vote.util.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = CafeController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 @Slf4j
 public class CafeController {
+    static final String REST_URL = "/api/cafes";
 
     private final CafeService cafeService;
 
     //for user
-    @GetMapping("/cafe")
+    @GetMapping
     public List<CafeDto> getAll() {
         log.info("getAll");
         return cafeService.getAll();
     }
 
     //for admin
-    @GetMapping("/cafe/my")
+    @GetMapping("/my")
     public List<CafeDto> getAllMine() {
         int id = authUserId();
         log.info("getAllMine");
         return cafeService.getByUserId(id);
     }
 
-    @GetMapping("/cafe/{id}")
+    @GetMapping("/{id}")
     public CafeDto get(@PathVariable int id) {
         int userId = authUserId();
         log.info("get cafe {} for user {}", id, userId);
         return cafeService.get(id, userId);
     }
 
-    @PostMapping("/cafe")
-    public CafeDto create(@RequestBody Cafe cafe) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<CafeDto> create(@RequestBody Cafe cafe) {
         int userId = authUserId();
-        checkNew(cafe);
         log.info("create {} for user{}", cafe, userId);
-        return cafeService.save(cafe, userId);
+        checkNew(cafe);
+        CafeDto created = cafeService.save(cafe, userId);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping("/cafe/{id}")
-    public CafeDto update(@RequestBody Cafe cafe, @PathVariable int id) {
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Cafe cafe, @PathVariable int id) {
         int userId = authUserId();
         assureIdConsistent(cafe, id);
         log.info("update {} for user {}", cafe, userId);
-        return cafeService.save(cafe, userId);
+        cafeService.save(cafe, userId);
     }
 
-    @DeleteMapping("/cafe/{id}")
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         int userId = authUserId();
         log.info("delete cafe {} for user {}", id, userId);

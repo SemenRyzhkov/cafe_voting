@@ -1,6 +1,7 @@
 package com.ryzhkov.cafe_vote.util;
 
 
+import com.ryzhkov.cafe_vote.dto.BaseDto;
 import com.ryzhkov.cafe_vote.model.BaseEntity;
 import com.ryzhkov.cafe_vote.util.exception.NotFoundException;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class ValidationUtil {
     public static void assureIdConsistent(BaseEntity entity, int id) {
         if (entity.isNew()) {
             entity.setId(id);
-        } else if (entity.id() != id) {
+        } else if (entity.getId() != id) {
             throw new IllegalArgumentException(entity + " must be with id=" + id);
         }
     }

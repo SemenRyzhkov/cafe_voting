@@ -35,6 +35,5 @@ public class Dish extends BaseEntity{
 
     @ManyToOne
     @JsonBackReference
-
     private Cafe cafe;
 }

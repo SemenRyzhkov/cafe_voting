@@ -45,6 +45,8 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
 //                .addMappings(m -> m.skip(CafeDto::setVoicesToday))
                 .addMappings((m -> m.skip(CafeDto::setUserId)))
                 .setPostConverter(toDtoConverter());
+        mapper.createTypeMap(CafeDto.class, Cafe.class)
+                .addMappings(m -> m.skip(Cafe::setUser)).setPostConverter(toEntityConverter());
     }
 
     @Override
@@ -56,6 +58,11 @@ public class CafeMapper extends AbstractMapper<Cafe, CafeDto> {
 
     protected Integer getId(Cafe source) {
         return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getUser().getId();
+    }
+
+    @Override
+    void mapSpecificFields(CafeDto source, Cafe destination) {
+        destination.setUser(repository.findById(source.getUserId()).orElse(null));
     }
 
     //

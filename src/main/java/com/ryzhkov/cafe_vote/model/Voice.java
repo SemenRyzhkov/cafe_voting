@@ -30,6 +30,5 @@ public class Voice extends BaseEntity {
 
     @ManyToOne
     @JsonBackReference
-
     private Cafe cafe;
 }

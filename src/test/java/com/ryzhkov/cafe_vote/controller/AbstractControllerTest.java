@@ -1,11 +1,12 @@
-package com.ryzhkov.cafe_vote.controller.user_controller;
+package com.ryzhkov.cafe_vote.controller;
 
 import com.ryzhkov.cafe_vote.CafeVoteApplication;
 import com.ryzhkov.cafe_vote.TimingExtension;
-import com.ryzhkov.cafe_vote.config.AppConfig;
-import com.ryzhkov.cafe_vote.config.CacheConfig;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -17,10 +18,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
 
-@SpringJUnitWebConfig({CafeVoteApplication.class, AppConfig.class, CacheConfig.class})
+@SpringJUnitWebConfig(CafeVoteApplication.class)
 @Transactional
 @ExtendWith(TimingExtension.class)
-
 public abstract class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
@@ -33,7 +33,18 @@ public abstract class AbstractControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private CacheManager cacheManager;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void evictAllCaches(){
+        cacheManager.getCacheNames()
+                .stream()
+                .map(cacheManager::getCache)
+                .forEach(Cache::clear);
+    }
 
     @PostConstruct
     private void postConstruct() {
@@ -46,4 +57,6 @@ public abstract class AbstractControllerTest {
     protected ResultActions perform(MockHttpServletRequestBuilder builder) throws Exception {
         return mockMvc.perform(builder);
     }
+
+
 }

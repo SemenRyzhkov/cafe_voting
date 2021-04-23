@@ -7,7 +7,10 @@ import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class AbstractMapper<E extends BaseEntity, D extends BaseDto> implements Mapper<E, D> {
 
@@ -34,6 +37,12 @@ public abstract class AbstractMapper<E extends BaseEntity, D extends BaseDto> im
         return Objects.isNull(entity)
                 ? null
                 : modelMapper.map(entity, dtoClass);
+    }
+
+    public List<D> toDto(Collection<E> entities){
+        return Objects.isNull(entities)
+                ?null
+                : entities.stream().map(ent->modelMapper.map(ent, dtoClass)).collect(Collectors.toList());
     }
 
     Converter<E, D> toDtoConverter() {

@@ -11,11 +11,11 @@ import com.ryzhkov.cafe_vote.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,18 +28,13 @@ public class CafeService {
     private final CafeMapper cafeMapper;
     private final DishMapper dishMapper;
 
+    @Cacheable("addresses")
     public List<CafeDto> getAll() {
-        return cafeRepository.getAll()
-                .stream()
-                .map(cafeMapper::toDto)
-                .collect(Collectors.toList());
+        return cafeMapper.toDto(cafeRepository.getAll());
     }
-
+    @Cacheable("addresses")
     public List<CafeDto> getByUserId(int userId) {
-        return cafeRepository.getByUserId(userId)
-                .stream()
-                .map(cafeMapper::toDto)
-                .collect(Collectors.toList());
+        return cafeMapper.toDto(cafeRepository.getAllByUserId(userId));
     }
 
     @Cacheable("addresses")
@@ -50,6 +45,7 @@ public class CafeService {
     }
 
     @Transactional
+    @CacheEvict(value = "addresses", allEntries = true)
     public CafeDto save(@NonNull Cafe cafe, int userId) {
         User user = userRepository.getOne(userId);
         cafe.setUser(user);
@@ -66,6 +62,7 @@ public class CafeService {
     }
 
     @Transactional
+    @CacheEvict(value = "addresses", allEntries = true)
     public void delete(int id, int userId) {
         cafeRepository.deleteByIdAndUserId(id, userId);
     }
