@@ -35,11 +35,10 @@ public class VoiceService {
         String answer = "You have successfully voted";
 
         if (voice == null) {
-            voice = new Voice(LocalDate.now(), LocalTime.now());
-            voice.setUserId(user.getId());
-            voice.setCafe(cafe);
+            voice = new Voice(null, LocalDate.now(), LocalTime.now(), user.getId());
+            voice.setCafeId(cafe.getId());
         } else if (checkTimeOfVoice()) {
-            voice.setCafe(cafe);
+            voice.setCafeId(cafe.getId());
             voice.setTime(LocalTime.now());
         } else {
             answer = "You have already voted today";
@@ -52,13 +51,19 @@ public class VoiceService {
 
     public Map<LocalDate, Long> historyOfVoting(int userId, int cafeId) {
         Cafe cafe = getCafe(cafeId);
-        if (cafe.getUser().getId() == userId) {
+        if (cafe!=null && cafe.getUser().getId() == userId) {
             return voiceRepository.getHistoryOfVoting(cafeId)
                     .stream()
                     .collect(Collectors.groupingBy(Voice::getDate, Collectors.counting()));
         }else return null;
     }
 
+    public int todayVoting(int userId, int cafeId) {
+        Cafe cafe = getCafe(cafeId);
+        if (cafe!=null && cafe.getUser().getId()==userId){
+            return voiceRepository.todayVoting(cafeId).size();
+        } else return 0;
+    }
 
     private boolean checkTimeOfVoice() {
         return LocalTime.now().compareTo(LocalTime.of(11, 0)) < 0;

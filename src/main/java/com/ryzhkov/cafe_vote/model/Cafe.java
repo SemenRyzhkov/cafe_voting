@@ -34,11 +34,11 @@ public class Cafe extends BaseEntity {
     @URL
     private String homepage;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "cafe_id")
-    @OrderBy("date desc")
-    @JsonManagedReference
-    private Set<Voice> voices;
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cafe_id")
+//    @OrderBy("date desc")
+//    @JsonManagedReference
+//    private Set<Voice> voices;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cafe_id")

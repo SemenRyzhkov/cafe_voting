@@ -58,8 +58,6 @@ class CafeControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @Rollback
-
     void create() throws Exception {
         Cafe newCafe = CafeTestData.getNew();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)

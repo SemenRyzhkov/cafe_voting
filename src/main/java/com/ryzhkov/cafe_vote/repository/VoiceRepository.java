@@ -14,9 +14,12 @@ public interface VoiceRepository extends JpaRepository<Voice, Integer> {
 
     @Transactional
     @Query("SELECT v FROM Voice v WHERE v.userId=:userId AND v.date=current_date ")
-    Optional<Voice> findByUserIdAndCurrentDate(@Param("userId") int userid);
+    Optional<Voice> findByUserIdAndCurrentDate(@Param("userId") int userId);
 
-    @Query("SELECT v FROM Voice v WHERE v.cafe.id=:cafeId")
+    @Query("SELECT v FROM Voice v WHERE v.cafeId=:cafeId")
     List<Voice> getHistoryOfVoting(@Param("cafeId") int cafeId);
+
+    @Query("SELECT v FROM Voice v WHERE v.cafeId=:cafeId AND v.date=current_date ")
+    List<Voice> todayVoting(@Param("cafeId") int cafeId);
 
 }

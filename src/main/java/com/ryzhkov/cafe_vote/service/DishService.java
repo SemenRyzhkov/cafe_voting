@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +23,7 @@ public class DishService {
     private final DishRepository dishRepository;
     private final DishMapper dishMapper;
 
-    public Map<LocalDate, List<DishDto>> historyOfMenu(int cafeId, int userid) {
+    public TreeMap<LocalDate, List<DishDto>> historyOfMenu(int cafeId, int userid) {
         Cafe cafe = cafeRepository.findByIdWithMenu(cafeId)
                 .orElseThrow(() -> new NotFoundException("Cafe with id " + cafeId + " not found"));
         if (cafe != null && cafe.getUser().getId() == userid) {
@@ -77,14 +76,17 @@ public class DishService {
         return cafeRepository.findById(cafeId).orElse(null);
     }
 
-    private Dish get(int id, int cafeId) {
+    public Dish get(int id, int cafeId) {
         return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(() -> new NotFoundException("Dish not found"));
     }
 
-    private Map<LocalDate, List<DishDto>> getHistory(Cafe cafe) {
-        return cafe.getMenu().stream()
-                .collect(Collectors.groupingBy(Dish::getDate, Collectors.mapping(dishMapper::toDto, Collectors.toList())));
+    private TreeMap<LocalDate, List<DishDto>> getHistory(Cafe cafe) {
+        TreeMap<LocalDate, List<DishDto>> history = new TreeMap<>(cafe.getMenu().stream()
+                .collect(Collectors.groupingBy(Dish::getDate, Collectors.mapping(dishMapper::toDto, Collectors.toList()))));
+        history.values().forEach(list -> list.sort(Comparator.comparing(DishDto::getDish)));
+        return history;
     }
+
 
     private List<DishDto> getMenu(Cafe cafe) {
         return cafe.getMenu().stream()

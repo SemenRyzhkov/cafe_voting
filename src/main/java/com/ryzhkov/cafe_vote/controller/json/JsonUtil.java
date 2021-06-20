@@ -1,10 +1,16 @@
 package com.ryzhkov.cafe_vote.controller.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import com.ryzhkov.cafe_vote.dto.DishDto;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.ryzhkov.cafe_vote.controller.json.JacksonObjectMapper.*;
 
@@ -34,5 +40,19 @@ public class JsonUtil {
         } catch (JsonProcessingException e) {
             throw new IllegalStateException("Invalid write to JSON:\n'" + obj + "'", e);
         }
+    }
+
+    public static <T> Map<LocalDate, List<DishDto>> readMapValues(String json, Class<T> clazz) {
+        ObjectMapper reader = getMapper();
+
+        try {
+            TypeReference<HashMap<LocalDate, List<DishDto>>> typeRef
+                    = new TypeReference<>() {
+            };
+            return reader.readValue(json, typeRef);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Invalid read array from JSON:\n'" + json + "'", e);
+        }
+
     }
 }

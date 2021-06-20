@@ -12,9 +12,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"dish", "date", "cafe_id"}, name = "dish_unique_index")})
+@Table(name = "dishes", uniqueConstraints =
+        {@UniqueConstraint(columnNames = {"dish", "date", "cafe_id"}, name = "dish_unique_index")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -36,4 +36,15 @@ public class Dish extends BaseEntity{
     @ManyToOne
     @JsonBackReference
     private Cafe cafe;
+
+    public Dish(Dish dish){
+        this(dish.getId(), dish.getDish(), dish.getDate(),  dish.getPrice());
+    }
+
+    public Dish(Integer id,String dish, LocalDate date,   Integer price) {
+        super(id);
+        this.date = date;
+        this.dish = dish;
+        this.price = price;
+    }
 }
