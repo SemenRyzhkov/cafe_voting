@@ -47,7 +47,7 @@ public class Cafe extends BaseEntity {
     @Setter(AccessLevel.NONE)
     private Set<Dish> menu;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private User user;
 

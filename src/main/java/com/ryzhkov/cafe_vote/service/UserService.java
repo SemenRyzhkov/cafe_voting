@@ -30,12 +30,10 @@ public class UserService {
 
     private final UserRepository repository;
 
-    @CacheEvict(value = "addresses", allEntries = true)
     public User create(@NonNull User user) {
         return checkNotFoundWithId(repository.save(user), user.id());
     }
 
-    @CacheEvict(value = "addresses", allEntries = true)
     @Transactional
     public void delete(int id) {
         repository.deleteById(id);
@@ -50,12 +48,10 @@ public class UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("addresses")
     public List<User> getAll() {
         return repository.findAll(SORT_NAME_EMAIL);
     }
 
-    @CacheEvict(value = "addresses", allEntries = true)
     public User update(@NonNull User user) {
         return checkNotFoundWithId(repository.save(user), user.id());
     }

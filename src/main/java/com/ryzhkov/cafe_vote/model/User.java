@@ -50,13 +50,6 @@ public class User extends BaseEntity {
 //    @BatchSize(size = 20)
     private Set<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "user_id")
-    @OrderBy("cafeName")
-    @JsonManagedReference
-//    @JsonIgnore
-    private List<Cafe> cafes;
-
     public User(User u){
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRoles());
     }
