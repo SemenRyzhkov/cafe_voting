@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Access(AccessType.FIELD)
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public abstract class BaseEntity implements Persistable<Integer> {
     @Id

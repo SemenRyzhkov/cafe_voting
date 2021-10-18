@@ -37,8 +37,8 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
             "AND d.date=:date")
     Optional<Cafe>getWithMenuByDate(@Param("cafeId") int cafeId, @Param("date") LocalDate date);
 
-    //    @Query("SELECT c FROM Cafe c WHERE c.user.id=:userId")
-    List<Cafe> getAllByUserId(int id);
+        @Query("SELECT c FROM Cafe c WHERE c.user.id=:userId")
+    List<Cafe> getAllByUserId(int userId);
 
     @Query("SELECT c FROM Cafe c LEFT JOIN FETCH c.user WHERE c.user.id=:userId")
     List<Cafe> getByUserId(@Param("userId") int userId);
@@ -58,4 +58,9 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
     @Transactional
     @Modifying
     void deleteByIdAndUserId(int id, int userId);
+
+    @Transactional
+    @Modifying
+    void deleteByUserId(int userId);
+
 }

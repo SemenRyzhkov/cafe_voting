@@ -17,27 +17,27 @@ class VoiceControllerTest extends AbstractControllerTest{
     @Autowired
     private VoiceRepository repository;
 
-    @Test
-    void makeVoice() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "makeVoice?cafeId=1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
-
-        VOICE_MATCHER.assertMatch(repository.getHistoryOfVoting(CafeTestData.CAFE1_ID).size(), cafe1Voice.size());
-    }
-    
-
-    @Test
-    void historyOfVoting() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "history?cafeId=1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void todayVoting() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "today?cafeId=1")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    void makeVoice() throws Exception {
+//        perform(MockMvcRequestBuilders.get(REST_URL + "makeVoice?cafeId=1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isNoContent());
+//
+//        VOICE_MATCHER.assertMatch(repository.getHistoryOfVoting(CafeTestData.CAFE1_ID).size(), cafe1Voice.size());
+//    }
+//
+//
+//    @Test
+//    void historyOfVoting() throws Exception {
+//        perform(MockMvcRequestBuilders.get(REST_URL + "history?cafeId=1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//    }
+//
+//    @Test
+//    void todayVoting() throws Exception {
+//        perform(MockMvcRequestBuilders.get(REST_URL + "today?cafeId=1")
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//    }
 }

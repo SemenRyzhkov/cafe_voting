@@ -30,9 +30,9 @@ public class VoiceTestData {
 
     public static final List<Voice> cafe1Voice = List.of(voice1, voice2, voice3, voice4, voice5, voice6, voice10);
     public  static final List<Voice> cafe2Voice = List.of(voice7, voice8, voice9);
-
-    static {
-        cafe1Voice.forEach(voice -> voice.setCafeId(CAFE1_ID));
-        cafe2Voice.forEach(voice -> voice.setCafeId(CAFE1_ID+1));
-    }
+//
+//    static {
+//        cafe1Voice.forEach(voice -> voice.setCafeId(CAFE1_ID));
+//        cafe2Voice.forEach(voice -> voice.setCafeId(CAFE1_ID+1));
+//    }
 }

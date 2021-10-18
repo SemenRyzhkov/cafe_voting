@@ -1,16 +1,16 @@
-INSERT INTO USERS (NAME, EMAIL, PASSWORD)
-VALUES ('Admin_First', 'admin@yandex.ru', 'admin'),
-       ('Admin_Second', 'second@yandex.ru', 'second'),
-       ('User_First', 'user@gmail.com', 'user'),
-       ('User_Second', 'userSec@gmail.com', 'user2');
+INSERT INTO USERS (NAME, EMAIL, PASSWORD, ROLE, STATUS)
+VALUES ('Admin_First', 'admin@yandex.ru', '$2a$12$MHXLBVEiOFvz2RCjMmBKsON9EjAuusDeAs2luju.k7.U2VVd/c7ki', 'ADMIN', 'ACTIVE'),
+       ('Admin_Second', 'second@yandex.ru', '$2a$12$VIG4uXPWFYSYw91htkzWNOkmqY9AAMv9QZd3/4KosDv1A1CLnJ58S', 'ADMIN', 'ACTIVE'),
+       ('User_First', 'user@gmail.com', '$2a$12$GeSDXIQielSzom.QAJxm5O3gnXq6akt5XBrzdtlFlUiHHodGfKy/m', 'USER', 'ACTIVE'),
+       ('User_Second', 'userSec@gmail.com', '$2a$12$aCa8Edna11paV.s7k8e.QOq5NokPKUuK61NHu5tFDVOxe3sD3zaCW', 'USER', 'BANNED');
 
-INSERT INTO USER_ROLES (ROLE, USER_ID)
-VALUES ('USER', 1),
-       ('ADMIN', 1),
-       ('USER', 2),
-       ('ADMIN', 2),
-       ('USER', 3),
-       ('USER', 4);
+--INSERT INTO USER_ROLES (ROLE, USER_ID)
+--VALUES ('USER', 1),
+--       ('ADMIN', 1),
+--       ('USER', 2),
+--       ('ADMIN', 2),
+--       ('USER', 3),
+--       ('USER', 4);
 
 INSERT INTO CAFES (NAME, DESCRIPTION, HOMEPAGE, USER_ID)
 VALUES ('cafe1', null, 'http://cafe1.com', 1),

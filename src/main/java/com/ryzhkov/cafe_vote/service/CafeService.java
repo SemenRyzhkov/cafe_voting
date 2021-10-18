@@ -29,12 +29,11 @@ public class CafeService {
     private final DishMapper dishMapper;
 
     @Cacheable("addresses")
-    public List<CafeDto> getAll() {
-        return cafeMapper.toDto(cafeRepository.getAll());
-    }
-    @Cacheable("addresses")
     public List<CafeDto> getByUserId(int userId) {
-        return cafeMapper.toDto(cafeRepository.getAllByUserId(userId));
+        return cafeRepository.getAllByUserId(userId)
+                .stream()
+                .map(cafeMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Cacheable("addresses")

@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cafes")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 //@RequiredArgsConstructor
 @Getter
 @Setter
