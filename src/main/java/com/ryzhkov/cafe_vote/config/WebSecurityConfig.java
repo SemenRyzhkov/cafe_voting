@@ -3,6 +3,7 @@ package com.ryzhkov.cafe_vote.config;
 import com.ryzhkov.cafe_vote.security.JwtConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/cafes/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers( "/api/auth/register").permitAll()
                 .antMatchers( "/h2-console/**").permitAll()

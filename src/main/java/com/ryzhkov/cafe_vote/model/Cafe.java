@@ -14,24 +14,19 @@ import java.util.Set;
 @Entity
 @Table(name = "cafes")
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Getter
 @Setter
 @ToString
 public class Cafe extends BaseEntity {
 
-    @NotBlank
-    @Size(min = 2, max = 100)
+
     @Column(name = "name", nullable = false)
     private String cafeName;
 
     @Column(name = "description")
     private String description;
 
-    @NotBlank
-    @Size(min = 2, max = 100)
     @Column(name = "homepage", nullable = false)
-    @URL
     private String homepage;
 
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -48,6 +43,7 @@ public class Cafe extends BaseEntity {
     private Set<Dish> menu;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
     @JsonBackReference
     private User user;
 

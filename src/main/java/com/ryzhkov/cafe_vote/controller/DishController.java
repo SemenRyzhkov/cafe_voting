@@ -1,4 +1,4 @@
-package com.ryzhkov.cafe_vote.controller.dishcontroller;
+package com.ryzhkov.cafe_vote.controller;
 
 import com.ryzhkov.cafe_vote.dto.DishDto;
 import com.ryzhkov.cafe_vote.model.Dish;

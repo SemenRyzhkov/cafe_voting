@@ -55,6 +55,8 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
 //    @Query("DELETE FROM Cafe c WHERE c.id=:id AND c.user.id=:userId")
 //    int delete(@Param("id") int id, @Param("userId") int userId);
 
+    Cafe findByIdAndUserId(int id, int userId);
+
     @Transactional
     @Modifying
     void deleteByIdAndUserId(int id, int userId);

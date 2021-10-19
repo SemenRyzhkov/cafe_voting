@@ -77,6 +77,8 @@
 //    }
 //
 //    public Dish get(int id, int cafeId) {
+//        log.info("get cafe {} for user {}", id, userId);
+
 //        return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(() -> new NotFoundException("Dish not found"));
 //    }
 //
