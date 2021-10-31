@@ -40,7 +40,7 @@ VALUES (current_timestamp(), 'dish1', 100, 1),
 INSERT INTO VOICES (DATE, TIME, CAFE_ID, USER_ID)
 VALUES (current_timestamp(), '22:34', 1, 4),
        (current_timestamp(), '22:35', 1, 2),
-       (current_timestamp(), '22:35', 1, 3),
+       (current_timestamp(), '22:35', 1, 1),
        ('2021-03-30', '22:35', 1, 1),
        ('2021-03-30', '22:35', 1, 2),
        ('2020-03-30', '22:35', 1, 3),

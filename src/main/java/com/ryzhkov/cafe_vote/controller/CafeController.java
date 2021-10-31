@@ -51,7 +51,7 @@ public class CafeController {
 
     @PostMapping(path = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('users:write')")
-    public ResponseEntity<CafeDto> create(@RequestBody CafeDto cafe,
+    public ResponseEntity<CafeDto> create(@RequestBody @Valid CafeDto cafe,
                                           @PathVariable int userId) {
         log.info("create {} for user{}", cafe, userId);
         CafeDto created = cafeService.save(cafe, userId);

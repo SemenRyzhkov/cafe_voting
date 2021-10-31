@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -70,10 +71,9 @@ public class DishController {
     public ResponseEntity<DishDto> create(
             @PathVariable int userId,
             @PathVariable int cafeId,
-            @RequestBody Dish dish,
+            @RequestBody @Valid DishDto dish,
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
         log.info("create dish {} for cafe {}", dish, cafeId);
-        checkNew(dish);
         DishDto created = dishService.save(dish, userId, cafeId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -85,12 +85,11 @@ public class DishController {
     @PutMapping("{userId}/menu/{cafeId}/dish/{id}")
     @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id) && hasAuthority('users:write')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Dish dish,
+    public void update(@RequestBody @Valid DishDto dish,
                        @PathVariable int userId,
                        @PathVariable int cafeId,
                        @PathVariable int id,
                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
-        assureIdConsistent(dish, id);
         log.info("update dish {} for cafe{}", dish, cafeId);
         dishService.save(dish, userId, cafeId);
 //        http://localhost:8080/api/cafes/1/menu/1/dish/13

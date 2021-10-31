@@ -53,16 +53,17 @@ public class DishService {
     }
 
     @Transactional
-    public DishDto save(@NonNull Dish dish, int userId, int cafeId) {
+    public DishDto save(@NonNull DishDto dish, int userId, int cafeId) {
+        Dish savedDish = dishMapper.toEntity(dish);
         Cafe cafe = getCafe(cafeId);
         if (cafe != null && cafe.getUser().getId() == userId) {
             if (dish.isNew()) {
-                dish.setDate(LocalDate.now());
+                savedDish.setDate(LocalDate.now());
             } else {
-                dish.setDate(get(dish.getId(), cafeId).getDate());
+                savedDish.setDate(get(dish.getId(), cafeId).getDate());
             }
-            dish.setCafe(cafe);
-            return dishMapper.toDto(dishRepository.save(dish));
+            savedDish.setCafe(cafe);
+            return dishMapper.toDto(dishRepository.save(savedDish));
         } else return null;
     }
 

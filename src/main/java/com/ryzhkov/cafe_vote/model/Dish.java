@@ -24,12 +24,9 @@ public class Dish extends BaseEntity{
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date;
 
-    @NotBlank
-    @Size(min = 2, max = 100)
     @Column(name = "dish", nullable = false)
     private String dish;
 
-    @Min(0)
     @Column(name = "price", nullable = false)
     private Integer price;
 

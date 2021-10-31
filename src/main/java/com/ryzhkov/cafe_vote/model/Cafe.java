@@ -19,7 +19,6 @@ import java.util.Set;
 @ToString
 public class Cafe extends BaseEntity {
 
-
     @Column(name = "name", nullable = false)
     private String cafeName;
 
@@ -29,18 +28,11 @@ public class Cafe extends BaseEntity {
     @Column(name = "homepage", nullable = false)
     private String homepage;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "cafe_id")
-//    @OrderBy("date desc")
-//    @JsonManagedReference
-//    private Set<Voice> voices;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "cafe_id")
     @OrderBy("dish")
     @JsonManagedReference
-    @Setter(AccessLevel.NONE)
-    private Set<Dish> menu;
+    private List<Dish> menu;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
