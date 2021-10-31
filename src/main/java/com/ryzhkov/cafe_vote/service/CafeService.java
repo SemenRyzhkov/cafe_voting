@@ -23,7 +23,6 @@ public class CafeService {
     private final CafeRepository cafeRepository;
     private final UserRepository userRepository;
     private final CafeMapper cafeMapper;
-    private final DishMapper dishMapper;
 
     public List<CafeDto> getAll() {
         return cafeRepository.getAll()
