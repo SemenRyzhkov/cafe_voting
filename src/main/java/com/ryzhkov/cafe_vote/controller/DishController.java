@@ -57,13 +57,11 @@ public class DishController {
         //http://localhost:8080/api/cafes/1/menu/1/by-date?date=2021-04-02
     }
 
-    //    for user: if admin has forgotten refresh menu, show yesterday menu
     @GetMapping("/menu/{cafeId}/by-date/cur-date")
     @PreAuthorize("hasAuthority('users:read')")
     public List<DishDto> todayMenuIfPresentOrElseYesterdayMenu(@PathVariable int cafeId) {
         log.info("todayMenuIfPresentOrElseYesterdayMenu for {} cafe", cafeId);
         return dishService.todayMenuIfPresentOrYesterdayMenu(cafeId);
-        //http://localhost:8080/api/cafes/menu/1/by-date/cur-date
     }
 
     @PostMapping(value = "{userId}/menu/{cafeId}/dish", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -92,11 +90,6 @@ public class DishController {
                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
         log.info("update dish {} for cafe{}", dish, cafeId);
         dishService.save(dish, userId, cafeId);
-//        http://localhost:8080/api/cafes/1/menu/1/dish/13
-//          {
-//            "dish": "zzzzzzzzz",
-//            "price": 1308
-//        }
     }
 
     @DeleteMapping("{userId}/menu/{cafeId}/dish/{id}")

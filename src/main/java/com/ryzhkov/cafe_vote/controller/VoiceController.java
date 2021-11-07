@@ -35,7 +35,6 @@ public class VoiceController {
                                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken){
         log.info("makeVoice for {} cafe", cafeId);
         return new ResponseEntity<>(voiceService.makeVoice(userId, cafeId), HttpStatus.OK) ;
-//        http://localhost:8080/api/cafes/voting/3/makeVoice?cafeId=3
     }
 
     @GetMapping("{userId}/history")
@@ -56,6 +55,5 @@ public class VoiceController {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken){
         log.info("today voting for {} cafe", cafeId);
         return voiceService.todayVoting(userId, cafeId);
-//        http://localhost:8080/api/cafes/voting/1/today?cafeId=1
     }
 }

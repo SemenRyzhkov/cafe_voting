@@ -15,7 +15,6 @@ class CafeServiceTest extends AbstractServiceTest {
     @Autowired
     private CafeMapper cafeMapper;
 
-
     @Test
     void get() {
         CafeDto cafe1 = service.save(

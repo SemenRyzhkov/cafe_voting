@@ -4,14 +4,6 @@ VALUES ('Admin_First', 'admin@yandex.ru', '$2a$12$MHXLBVEiOFvz2RCjMmBKsON9EjAuus
        ('User_First', 'user@gmail.com', '$2a$12$GeSDXIQielSzom.QAJxm5O3gnXq6akt5XBrzdtlFlUiHHodGfKy/m', 'USER', 'ACTIVE'),
        ('User_Second', 'userSec@gmail.com', '$2a$12$aCa8Edna11paV.s7k8e.QOq5NokPKUuK61NHu5tFDVOxe3sD3zaCW', 'USER', 'BANNED');
 
---INSERT INTO USER_ROLES (ROLE, USER_ID)
---VALUES ('USER', 1),
---       ('ADMIN', 1),
---       ('USER', 2),
---       ('ADMIN', 2),
---       ('USER', 3),
---       ('USER', 4);
-
 INSERT INTO CAFES (NAME, DESCRIPTION, HOMEPAGE, USER_ID)
 VALUES ('cafe1', null, 'http://cafe1.com', 1),
        ('cafe2', 'new_cafe', 'http://cafe2.com', 1),

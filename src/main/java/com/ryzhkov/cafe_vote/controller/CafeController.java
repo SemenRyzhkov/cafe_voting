@@ -29,14 +29,12 @@ public class CafeController {
         this.cafeService = cafeService;
     }
 
-    //for user
     @GetMapping
     public List<CafeDto> getAll() {
         log.info("getAll");
         return cafeService.getAll();
     }
 
-    //for admin
     @GetMapping("/{userId}")
     @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id) && hasAuthority('users:write')")
     public List<CafeDto> getAllMine(@PathVariable int userId,
@@ -46,7 +44,7 @@ public class CafeController {
     }
 
     @GetMapping("/{userId}/{id}")
-    @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id)")
+    @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id) && hasAuthority('users:write')")
     public CafeDto get(@PathVariable int id,
                        @PathVariable int userId,
                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
