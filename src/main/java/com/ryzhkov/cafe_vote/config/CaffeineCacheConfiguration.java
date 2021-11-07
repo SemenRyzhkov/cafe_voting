@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 @Configuration
 public class CaffeineCacheConfiguration {
-    @Value("${spring.cache.caffeine.cache-names:books}")
+    @Value("${spring.cache.caffeine.cache-names:cafes}")
     private String[] cacheNames;
     @Value("${spring.cache.caffeine.initial-capacity:500}")
     private Integer initialCapacity;

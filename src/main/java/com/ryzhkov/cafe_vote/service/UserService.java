@@ -11,9 +11,9 @@ import com.ryzhkov.cafe_vote.model.User;
 import com.ryzhkov.cafe_vote.repository.CafeRepository;
 import com.ryzhkov.cafe_vote.repository.UserRepository;
 import com.ryzhkov.cafe_vote.security.SecurityUser;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Slf4j
 public class UserService implements UserDetailsService {
     private static final Sort SORT_NAME_EMAIL = Sort.by(Sort.Direction.ASC, "name", "email");
@@ -36,6 +35,15 @@ public class UserService implements UserDetailsService {
     private final CafeRepository cafeRepository;
     private final UserRepository repository;
     private final UserMapper mapper;
+
+
+    @Autowired
+    public UserService(PasswordEncoder bCryptPasswordEncoder, CafeRepository cafeRepository, UserRepository repository, UserMapper mapper) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.cafeRepository = cafeRepository;
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     public List<UserDto> getAll() {
         return repository.findAll()

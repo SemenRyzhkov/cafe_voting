@@ -7,23 +7,31 @@ import com.ryzhkov.cafe_vote.model.Dish;
 import com.ryzhkov.cafe_vote.repository.CafeRepository;
 import com.ryzhkov.cafe_vote.repository.DishRepository;
 import com.ryzhkov.cafe_vote.util.exception.NotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 @Slf4j
 public class DishService {
     private final CafeRepository cafeRepository;
     private final DishRepository dishRepository;
     private final DishMapper dishMapper;
+
+    @Autowired
+    public DishService(CafeRepository cafeRepository, DishRepository dishRepository, DishMapper dishMapper) {
+        this.cafeRepository = cafeRepository;
+        this.dishRepository = dishRepository;
+        this.dishMapper = dishMapper;
+    }
 
     public TreeMap<LocalDate, List<DishDto>> historyOfMenu(int cafeId, int userid) {
         Cafe cafe = cafeRepository.findByIdWithMenu(cafeId)
@@ -80,8 +88,6 @@ public class DishService {
     }
 
     public Dish get(int id, int cafeId) {
-        log.info("get cafe {} for user {}", id, cafeId);
-
         return dishRepository.getByIdAndCafeId(id, cafeId).orElseThrow(() -> new NotFoundException("Dish not found"));
     }
 

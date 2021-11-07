@@ -1,6 +1,5 @@
 package com.ryzhkov.cafe_vote.service;
 
-import com.ryzhkov.cafe_vote.dto.VoiceDto;
 import com.ryzhkov.cafe_vote.mapper.VoiceMapper;
 import com.ryzhkov.cafe_vote.model.Cafe;
 import com.ryzhkov.cafe_vote.model.User;
@@ -9,7 +8,7 @@ import com.ryzhkov.cafe_vote.repository.CafeRepository;
 import com.ryzhkov.cafe_vote.repository.UserRepository;
 import com.ryzhkov.cafe_vote.repository.VoiceRepository;
 import com.ryzhkov.cafe_vote.util.exception.NotFoundException;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +18,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class VoiceService {
     private final CafeRepository cafeRepository;
     private final UserRepository userRepository;
     private final VoiceRepository voiceRepository;
     private final VoiceMapper voiceMapper;
+
+    @Autowired
+    public VoiceService(
+            CafeRepository cafeRepository,
+            UserRepository userRepository,
+            VoiceRepository voiceRepository,
+            VoiceMapper voiceMapper) {
+        this.cafeRepository = cafeRepository;
+        this.userRepository = userRepository;
+        this.voiceRepository = voiceRepository;
+        this.voiceMapper = voiceMapper;
+    }
 
     @Transactional
     public String makeVoice(int userId, int cafeId) {
