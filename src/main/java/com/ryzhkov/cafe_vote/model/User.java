@@ -33,4 +33,16 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    public User(User user) {
+        this(user.getId(), user.getName(), user.getPassword(), user.getEmail(), user.getRole(), user.getStatus());
+    }
+
+    public User(Integer id, String name, String password, String email, Role role, Status status) {
+        super(id);
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.status = status;
+    }
 }

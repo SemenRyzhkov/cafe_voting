@@ -3,6 +3,7 @@ package com.ryzhkov.cafe_vote.config;
 import com.ryzhkov.cafe_vote.security.JwtConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,8 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-//@ConditionalOnProperty(value = "auth.enabled", havingValue = "false", matchIfMissing = true)
-//@Profile(value = {"development", "production"})
+@Profile(value = {"development", "production"})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfigurer jwtConfigurer;

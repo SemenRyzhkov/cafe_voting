@@ -7,6 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,6 +24,9 @@ import javax.annotation.PostConstruct;
 @SpringJUnitWebConfig(CafeVoteApplication.class)
 @Transactional
 @ExtendWith(TimingExtension.class)
+@ActiveProfiles(value = "test")
+@TestPropertySource(locations="classpath:application-test.properties")
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public abstract class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
@@ -39,7 +45,7 @@ public abstract class AbstractControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void evictAllCaches(){
+    public void evictAllCaches() {
         cacheManager.getCacheNames()
                 .stream()
                 .map(cacheManager::getCache)

@@ -1,5 +1,6 @@
 package com.ryzhkov.cafe_vote.dto.userDto;
 
+import com.ryzhkov.cafe_vote.model.Status;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -7,11 +8,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class UserDto {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 
     private String email;
 
     private String role;
+
+    private Status status;
 }

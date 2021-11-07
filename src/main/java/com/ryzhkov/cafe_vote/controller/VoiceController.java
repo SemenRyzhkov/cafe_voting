@@ -1,8 +1,8 @@
 package com.ryzhkov.cafe_vote.controller;
 
 import com.ryzhkov.cafe_vote.service.VoiceService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +10,22 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import javax.net.ssl.SSLEngineResult;
 import java.time.LocalDate;
 import java.util.Map;
 
 
 @RestController
 @RequestMapping(value = VoiceController.REST_URL,  produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
 @Slf4j
 public class VoiceController {
-    static final String REST_URL = "/api/cafes/voting/";
+    public static final String REST_URL = "/api/cafes/voting/";
 
     private final VoiceService voiceService;
+
+    @Autowired
+    public VoiceController(VoiceService voiceService) {
+        this.voiceService = voiceService;
+    }
 
     @GetMapping("{userId}/makeVoice")
     @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id) && hasAuthority('users:read')")

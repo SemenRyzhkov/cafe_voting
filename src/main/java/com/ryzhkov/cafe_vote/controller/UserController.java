@@ -5,8 +5,8 @@ import com.ryzhkov.cafe_vote.dto.userDto.AdminDto;
 import com.ryzhkov.cafe_vote.dto.userDto.UserDto;
 import com.ryzhkov.cafe_vote.dto.userDto.UserEditDto;
 import com.ryzhkov.cafe_vote.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,17 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping(value = UserController.REST_URL)
 @Slf4j
 public class UserController {
-    static final String REST_URL = "/api/users";
+    public static final String REST_URL = "/api/users";
 
     private final UserService service;
+
+    @Autowired
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping
     @PreAuthorize("hasAuthority('users:write')")

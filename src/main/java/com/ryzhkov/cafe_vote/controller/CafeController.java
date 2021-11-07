@@ -2,8 +2,9 @@ package com.ryzhkov.cafe_vote.controller;
 
 import com.ryzhkov.cafe_vote.dto.CafeDto;
 import com.ryzhkov.cafe_vote.service.CafeService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,12 +18,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = CafeController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
 @Slf4j
 public class CafeController {
-    static final String REST_URL = "/api/cafes";
+    public static final String REST_URL = "/api/cafes";
 
     private final CafeService cafeService;
+
+    @Autowired
+    public CafeController(CafeService cafeService) {
+        this.cafeService = cafeService;
+    }
 
     //for user
     @GetMapping
@@ -71,6 +76,7 @@ public class CafeController {
         return cafeService.update(cafeDto, id, userId);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{userId}/{id}")
     @PreAuthorize("#userId.equals(#usernamePasswordAuthenticationToken.principal.id)")
     public void delete(@PathVariable int userId,

@@ -6,6 +6,8 @@ import com.ryzhkov.cafe_vote.dto.userDto.UserEditDto;
 import com.ryzhkov.cafe_vote.model.User;
 import org.mapstruct.*;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
@@ -16,6 +18,8 @@ public interface UserMapper {
 
     User dtoToEntity(UserEditDto editDto);
 
+    UserEditDto entityToEditDto(User user);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     void patchFromEditDto(UserEditDto userEditDto, @MappingTarget User user);
@@ -23,5 +27,10 @@ public interface UserMapper {
     @BeanMapping(
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     void patchFromAdminDto(AdminDto adminDto, @MappingTarget User user);
+
+    List<UserDto> usersToUsersDto(List<User> users);
+
+    @InheritInverseConfiguration
+    List<User> usersDtoToUsers(List<UserDto> dtos);
 
 }

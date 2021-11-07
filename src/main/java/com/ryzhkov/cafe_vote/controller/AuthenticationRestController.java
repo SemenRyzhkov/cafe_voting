@@ -8,6 +8,7 @@ import com.ryzhkov.cafe_vote.security.JwtTokenProvider;
 import com.ryzhkov.cafe_vote.service.UserService;
 import com.ryzhkov.cafe_vote.util.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,12 +25,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-//@Profile(value = {"development", "production"})
-//@ConditionalOnProperty(value = "auth.enabled", havingValue = "false", matchIfMissing = true)
+@Profile(value = {"development", "production"})
 @Slf4j
 public class AuthenticationRestController {
 
-    private UserService service;
+    private final UserService service;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;

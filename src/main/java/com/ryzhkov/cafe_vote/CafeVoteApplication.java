@@ -14,15 +14,12 @@ import java.util.Set;
 @SpringBootApplication
 @AllArgsConstructor
 public class CafeVoteApplication implements ApplicationRunner {
-    private final UserRepository userRepository;
-
     public static void main(String[] args) {
         SpringApplication.run(CafeVoteApplication.class, args);
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-//        System.out.println(userRepository.findAll());
     }
 
 }

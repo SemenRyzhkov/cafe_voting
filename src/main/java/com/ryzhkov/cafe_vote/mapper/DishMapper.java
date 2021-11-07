@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface DishMapper {
 
@@ -16,5 +18,10 @@ public interface DishMapper {
 
     @InheritInverseConfiguration
     Dish toEntity(DishDto dto);
+
+    List<DishDto> toDtoList(List<Dish> dishes);
+
+    @InheritInverseConfiguration
+    List<Dish> toDishList(List<DishDto> dtos);
 
 }

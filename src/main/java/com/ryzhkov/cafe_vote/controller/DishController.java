@@ -1,10 +1,9 @@
 package com.ryzhkov.cafe_vote.controller;
 
 import com.ryzhkov.cafe_vote.dto.DishDto;
-import com.ryzhkov.cafe_vote.model.Dish;
 import com.ryzhkov.cafe_vote.service.DishService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,18 +19,19 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import static com.ryzhkov.cafe_vote.util.ValidationUtil.assureIdConsistent;
-import static com.ryzhkov.cafe_vote.util.ValidationUtil.checkNew;
-
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
 @Slf4j
 public class DishController {
 
     private final DishService dishService;
 
-    static final String REST_URL = "/api/cafes/";
+    public static final String REST_URL = "/api/cafes/";
+
+    @Autowired
+    public DishController(DishService dishService) {
+        this.dishService = dishService;
+    }
 
     //for admin
     @GetMapping("{userId}/menu/{cafeId}")
